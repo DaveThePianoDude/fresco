@@ -36,7 +36,7 @@ Fresco may be used in the browser by visiting [https://fresco.gospatial.org/](ht
 
 Fresco is built on top of React. To run Fresco from source use the following steps:
 
-1. Download the latest version of [Node.js](https://nodejs.org/en/download/)
+1. Download the latest version of [Node.js](https://nodejs.org/en/download/), or (as of 11.3.2020) just use node v12.19.0 ('nvm use 12').
 2. Clone this repository to your computer
 3. Navigate to this repo on your computer
 4. Run `npm install`
