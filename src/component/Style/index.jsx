@@ -12,6 +12,7 @@ import StyleCode from './StyleCode'
 import StyleLayers from './StyleLayers'
 import StyleSources from './StyleSources'
 import StyleSettings from './StyleSettings'
+import GlobalEdit from './GlobalEdit'
 import Infotip from '../Infotip'
 
 class Style extends React.Component {
@@ -101,10 +102,10 @@ class Style extends React.Component {
 							{...props}
 						/>
 					)}/>
-				<Route path={`${match.url}/settings`} 
+				<Route path={`${match.url}/globaledit`} 
 					render={(props) => (
-						<StyleSettings
-							error={error && error.has && error.getIn(['current','settings'])} 
+						<GlobalEdit
+							error={error && error.has && error.getIn(['current','globaledit'])} 
 							handle={this.handle} 
 							path={path} 
 							style={style} 
@@ -121,13 +122,13 @@ class Style extends React.Component {
 
 		return (
 			<div className="content-title-options">
-				<NavLink className={`content-title-option interactive infotip-trigger ${error && error.hasIn(['current','settings'])? 'error': ''}`} to={`${match.url}/settings`}>
+				<NavLink className={`content-title-option interactive infotip-trigger ${error && error.hasIn(['current','globaledit'])? 'error': ''}`} to={`${match.url}/globaledit`}>
                                         <Icon icon={'global'}/>
                                         <Infotip direction={'y'} message={'global edit'}/>
                                 </NavLink>
 				<NavLink className={`content-title-option interactive infotip-trigger ${error && error.hasIn(['current','settings'])? 'error': ''}`} to={`${match.url}/settings`}>
 					<Icon icon={'settings'}/>
-					<Infotip direction={'y'} message={'style ~settings'}/>
+					<Infotip direction={'y'} message={'style settings'}/>
 				</NavLink>
 				<NavLink className={`content-title-option interactive infotip-trigger ${error && error.hasIn(['current','sources'])? 'error': ''}`} to={`${match.url}/sources`}>
 					<Icon icon={'source'}/>
