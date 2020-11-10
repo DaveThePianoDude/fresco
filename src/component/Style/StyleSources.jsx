@@ -47,7 +47,7 @@ class StyleSources extends React.Component {
 		return (
 			<div className="content-body content-body-flex">
 				<div className="content-body-left">
-					{searchShow ? 
+					{searchShow ?
 						<div className="d-flex p-1">
 							<div className="property flex-fill">
 								<Field
@@ -134,9 +134,9 @@ class StyleSources extends React.Component {
 		return (
 			<div className="content-body-right">
 				<Switch>
-					<Route path={`${match.url}/add`} 
+					<Route path={`${match.url}/add`}
 						render={(props) => <SourceAdd path={sourcesPath} style={style} {...props}/>}/>
-					<Route path={`${match.url}/:sourceId`} 
+					<Route path={`${match.url}/:sourceId`}
 						render={(props) => {
 							// get index for sourceId
 							const sourceId = props.match.params.sourceId

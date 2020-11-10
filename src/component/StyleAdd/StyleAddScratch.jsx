@@ -67,7 +67,7 @@ class StyleAddScratch extends React.Component {
 
 		return <form className="content-body" onSubmit={this.handleSubmit}>
 			<h4 className="content-body-title">
-				<span>From Scratch</span>
+				<span>From Scratch ... (Yum!)</span>
 			</h4>
 			<div className="property-content">
 				<Property 

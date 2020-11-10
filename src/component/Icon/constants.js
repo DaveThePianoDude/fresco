@@ -43,6 +43,7 @@ const icons = {
 	style: 'fa-brush',
 	styles: 'fa-globe-americas',
 	settings: 'fa-cog',
+	global: 'fa-globe',
 	token: 'fa-key',
 	update: 'fa-wrench',
 	upload: 'fa-folder-upload',
