@@ -11,6 +11,7 @@ import StyleSettingsDomains from './StyleSettingsDomains'
 import StyleSettingsRoot from './StyleSettingsRoot'
 import StyleSettingsTokens from './StyleSettingsTokens'
 import StyleUpdate from '../StyleUpdate'
+import StylePull from '../StylePull'
 
 class StyleRoot extends React.Component {
 	constructor(props) {
@@ -104,6 +105,8 @@ class StyleRoot extends React.Component {
 				<Switch>
 					<Route path={`${match.url}/actions/update`} 
 						render={(props) => <StyleUpdate path={currentPath} style={style} {...props}/>}/>
+					<Route path={`${match.url}/actions/pull`}
+                                                render={(props) => <StylePull path={currentPath} style={style} {...props}/>}/>	
 					<Route path={`${match.url}/actions`} 
 						render={(props) => <StyleSettingsActions path={currentPath} style={style} {...props}/>}/>
 					<Route path={`${match.url}/root`} 
