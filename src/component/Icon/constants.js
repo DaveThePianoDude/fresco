@@ -31,8 +31,9 @@ const icons = {
 	'layer-raster': 'fa-satellite',
 	'layer-symbol': 'fa-text',
 	location: 'fa-location',
-
 	'map-focus': 'fa-map-marker',
+	pull: 'fa-arrow-down',
+	push: 'fa-arrow-up',
 	refresh: 'fa-redo',
 	remove: 'fa-trash',
 	required: 'fa-asterisk',

@@ -54,6 +54,24 @@ class StyleSettingsActions extends React.Component {
 					</Link>
 				</div>
 				<hr/>
+                                <div className="content-body-row mb-2">
+                                        <Link to={`${match.url}/pull`} className="btn btn-sm btn-outline-dark btn-block">
+                                                <Icon className="mr-1" icon={'pull'}/>
+                                                Pull Style
+                                        </Link>
+                                </div>
+                                <div className="content-body-row mb-2">
+                                        <Link to={`${match.url}/stage`} className="btn btn-sm btn-outline-dark btn-block">
+                                                <Icon className="mr-1" icon={'stage'}/>
+                                                Stage Style
+                                        </Link>
+                                </div>
+                                <div className="content-body-row mb-2">
+                                        <Link to={`${match.url}/push`} className="btn btn-sm btn-outline-dark btn-block">
+                                                <Icon className="mr-1" icon={'push'}/>
+                                                Push Style
+                                        </Link>
+                                </div>
 				<div className="content-body-row">
 					<button onClick={()=>this.handleModalSet('remove')} className="btn btn-sm btn-outline-danger btn-block">
 						<Icon className="mr-1" icon={'remove'}/>
