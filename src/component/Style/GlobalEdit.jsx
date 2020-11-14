@@ -12,7 +12,7 @@ import modelStyle from '../../model/style'
 import Field from '../Field'
 import Icon from '../Icon'
 import LayerAdd from '../LayerAdd'
-import LayerEdit from '../GlobalLayerEdit'
+import GlobalLayerEdit from '../GlobalLayerEdit'
 import Infotip from '../Infotip'
 
 class GlobalEdit extends React.Component {
@@ -206,9 +206,12 @@ class GlobalEdit extends React.Component {
 		}
 
 		renderRight (){
+			console.log('rendering right...')
 			const {error, match, path, style} = this.props
 
 			const layersPath = [...path, 'current', 'layers']
+
+			console.log('match='+ match.url)
 
 			let redirect = `${match.url}/add`
 			const layers = style.getIn(['current','layers'])
@@ -226,7 +229,7 @@ class GlobalEdit extends React.Component {
 								// get index for layerId
 								const layerIndex = modelLayer.helpers.getIndexById({layerId: props.match.params.layerId, path:layersPath, style})
 								return (
-									<LayerEdit
+									<GlobalLayerEdit
 										error={error && error.has && error.getIn([layerIndex])}
 										layerId={props.match.params.layerId}
 										layerIndex={layerIndex}
