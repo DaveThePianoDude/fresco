@@ -1,18 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {NavLink, Redirect, Route, Switch} from 'react-router-dom'
+//import {NavLink, Redirect, Route, Switch} from 'react-router-dom'
+import {NavLink, Link, Redirect, Route, Switch} from 'react-router-dom'
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
+import modelApp from '../../model/app'
 import modelLayer from '../../model/layer'
+import modelMap from '../../model/map'
 import modelStyle from '../../model/style'
+import Field from '../Field'
 import Icon from '../Icon'
-import StyleSettingsActions from './StyleSettingsActions'
-import StyleSettingsDomains from './StyleSettingsDomains'
-import StyleSettingsRoot from './StyleSettingsRoot'
-import StyleSettingsTokens from './StyleSettingsTokens'
-import StyleUpdate from '../StyleUpdate'
+import LayerAdd from '../LayerAdd'
+import LayerEdit from '../GlobalLayerEdit'
+import Infotip from '../Infotip'
 
-class StyleRoot extends React.Component {
+class GlobalEdit extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -54,74 +57,192 @@ class StyleRoot extends React.Component {
 		})
 	}
 
-	render (){
-		const {match} = this.props
+		render (){
+			const {focusLayers, layers, match} = this.props,
+				{search, searchShow} = this.state
 
-		return (
-			<div className="content-body content-body-flex">
-				<div className="content-body-left">
-					<div className="">
-						<NavLink to={`${match.url}/root`} className="content-body-left-row row-icons">
-							<div className="row-icon-left">
-								<Icon className="md-shadow" icon={'root'} weight={'regular'}/>
+			const handle = {
+				change: this.handleSearchChange
+			}
+
+			return (
+				<div className="content-body content-body-flex">
+					<div className="content-body-left">
+						{searchShow ?
+							<div className="d-flex p-1">
+								<div className="property flex-fill">
+									<Field
+										autoFocus={true}
+										handle={handle}
+										name={'search'}
+										placeholder={'Search for layers'}
+										inputClass={'form-control-sm font-sm'}
+										inputNoAC={true}
+										type={'string'}
+										value={search}
+									 />
+								</div>
+								<div className="search-option" onClick={()=>this.handleSearchShowSet({show:false})}>
+									<Icon icon={'close'}/>
+								</div>
 							</div>
-							root
-						</NavLink>
-						<NavLink to={`${match.url}/tokens`} className="content-body-left-row row-icons">
-							<div className="row-icon-left">
-								<Icon className="md-shadow" icon={'token'} weight={'regular'}/>
+							:
+							<h2 className="content-title content-title-sub clearfix">
+								<span className="content-title-label text-overflow-ellipsis">
+									Layers ({layers? layers.size: 0})
+								</span>
+								<div className="content-title-options">
+									<span onClick={()=>this.handleSearchShowSet({show:true})} className={'content-title-option interactive infotip-trigger'}>
+										<Icon icon={'search'}/>
+										<Infotip direction={'y'} message={'search'}/>
+									</span>
+									<Link to={`${match.url}/add`} className={'content-title-option interactive infotip-trigger'}>
+										<Icon icon={'add'}/>
+										<Infotip direction={'y'} message={'add layer'}/>
+									</Link>
+								</div>
+							</h2>
+						}
+						{focusLayers && Object.keys(focusLayers).length > 0 && (
+							<div className="content-body-title bg-info pl-1">
+								<Icon className="mr-1" icon={'map-focus'} weight={'solid'}/>
+								{Object.keys(focusLayers).length} Layers Focused
+								<button type="button" className="btn btn-outline-light btn-xs float-right"
+									onClick={this.handleFocusClose}>
+									<Icon icon={'close'}/>
+								</button>
 							</div>
-							access tokens
-						</NavLink>
-						<NavLink to={`${match.url}/actions`} className="content-body-left-row row-icons">
-							<div className="row-icon-left">
-								<Icon className="md-shadow" icon={'action'} weight={'regular'}/>
-							</div>
-							actions
-						</NavLink>
-						<NavLink to={`${match.url}/domains`} className="content-body-left-row row-icons">
-							<div className="row-icon-left">
-								<Icon className="md-shadow" icon={'domain'} weight={'regular'}/>
-							</div>
-							domains
-						</NavLink>
+						)}
+						{this.renderList()}
 					</div>
+					{this.renderRight()}
 				</div>
-				{this.renderRight()}
-			</div>
-		)
+			)
+		}
+
+		renderList (){
+			const {error, focusLayers, layers, match} = this.props,
+				{search} = this.state
+
+			if (!layers){
+				return <div/>
+			}
+
+			return (
+				<div className="">
+					<DragDropContext onDragEnd={this.handleOnDragEnd}>
+						<Droppable droppableId="droppable">
+							{(provided, snapshot) => (
+								<div ref={provided.innerRef}>
+									{layers !== undefined && layers.map((layer,i)=>{
+
+										if (!layer || !layer.has) return <div key={i}/>
+										const layerId = layer.has('id')? layer.get('id'): `layer-${i}`
+
+										if (focusLayers && Object.keys(focusLayers).length > 0 && !focusLayers[layerId]) return <div key={i}/>
+										if (search && search.length > 0 && layerId.toLowerCase().indexOf(search.toLowerCase()) === -1) return <div key={i}/>
+
+										let className = 'content-body-left-row row-icons '
+										if (error && error.hasIn([i])) className += ' error'
+
+										const color = modelLayer.helpers.getColor({layer}) || '#FFFFFF'
+										const icon = `layer-${modelLayer.helpers.getType({layer})}`
+
+										return <Draggable key={layerId} draggableId={layerId} index={i}>
+											{(provided, snapshot) => (
+												<NavLink key={layerId} to={`${match.url}/${layerId}`} className={className} ref={provided.innerRef}
+													{...provided.draggableProps}
+													{...provided.dragHandleProps}>
+
+														<div className="row-icon-left">
+															<Icon className="md-shadow" icon={icon} color={color} weight={'solid'}/>
+														</div>
+														{layerId}
+														{this.renderLayerOption({layer, layerId, layerInd:i})}
+												</NavLink>
+											)}
+										</Draggable>
+									})}
+								</div>
+							)}
+						</Droppable>
+					</DragDropContext>
+				</div>
+			)
+		}
+
+		renderLayerOption ({layer, layerId, layerInd}){
+			const {error, focusLayers} = this.props
+
+			if (error && error.hasIn([layerInd])){
+				return (
+					<div className="row-icon-right">
+						<Icon className="md-shadow text-danger" icon={'alert'} weight={'solid'}/>
+					</div>
+				)
+			}
+
+			if (focusLayers && focusLayers[layerId]){
+				return (
+					<div className="row-icon-right">
+						<Icon className="md-shadow text-info" icon={'map-focus'} weight={'solid'}/>
+						<b className="text-info focus-layer-features">{focusLayers[layerId]}</b>
+					</div>
+				)
+			}
+			if (layer.getIn(['layout','visibility']) === 'none'){
+				return (
+					<div onClick={(e)=>this.handleVisibility({e, layerId, show:true})} className="row-icon-right">
+						<Icon className="md-shadow text-muted" icon={'invisible'} weight={'solid'}/>
+					</div>
+				)
+			}
+
+			return (
+				<div onClick={(e)=>this.handleVisibility({e, layerId, show:false})} className="row-icon-right">
+					<Icon className="md-shadow" icon={'visible'} weight={'solid'}/>
+				</div>
+			)
+		}
+
+		renderRight (){
+			const {error, match, path, style} = this.props
+
+			const layersPath = [...path, 'current', 'layers']
+
+			let redirect = `${match.url}/add`
+			const layers = style.getIn(['current','layers'])
+			if (layers && layers.size > 0){
+				redirect = `${match.url}/${layers.getIn([0, 'id'])}`
+			}
+
+			return (
+				<div className="content-body-right">
+					<Switch>
+						<Route path={`${match.url}/add`}
+							render={(props) => <LayerAdd path={layersPath} style={style} {...props}/>}/>
+						<Route path={`${match.url}/:layerId`}
+							render={(props) => {
+								// get index for layerId
+								const layerIndex = modelLayer.helpers.getIndexById({layerId: props.match.params.layerId, path:layersPath, style})
+								return (
+									<LayerEdit
+										error={error && error.has && error.getIn([layerIndex])}
+										layerId={props.match.params.layerId}
+										layerIndex={layerIndex}
+										path={[...layersPath, layerIndex]}
+										style={style} {...props}
+									/>
+								)
+							}}/>
+						<Redirect to={redirect}/>
+					</Switch>
+				</div>
+			)
+		}
 	}
 
-	renderRight (){
-		const {match, path, style} = this.props
-
-		const currentPath = [...path, 'current']
-
-		let redirect = `${match.url}/root`
-
-		return (
-			<div className="content-body-right">
-				<Switch>
-					<Route path={`${match.url}/actions/update`} 
-						render={(props) => <StyleUpdate path={currentPath} style={style} {...props}/>}/>
-					<Route path={`${match.url}/actions`} 
-						render={(props) => <StyleSettingsActions path={currentPath} style={style} {...props}/>}/>
-					<Route path={`${match.url}/root`} 
-						render={(props) => <StyleSettingsRoot path={currentPath} style={style} {...props}/>}/>
-					<Route path={`${match.url}/domains`} 
-						render={(props) => <StyleSettingsDomains path={path} style={style} {...props}/>}/>
-					<Route path={`${match.url}/tokens`} 
-						render={(props) => <StyleSettingsTokens path={currentPath} style={style} {...props}/>}/>
-
-					<Redirect to={redirect}/>
-				</Switch>
-			</div>
-		)
-	}
-}
-
-
-StyleRoot.propTypes = {
+GlobalEdit.propTypes = {
 	error: PropTypes.object,
 	layers: PropTypes.object,
 	match: PropTypes.object,
@@ -137,4 +258,4 @@ const mapStateToProps = (state, props) => {
 }
 export default connect(
   mapStateToProps,{}
-)(StyleRoot)
+)(GlobalEdit)
