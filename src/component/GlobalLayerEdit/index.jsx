@@ -14,6 +14,8 @@ import modelMap from '../../model/map'
 import modelPreference from '../../model/preference'
 import modelStyle from '../../model/style'
 
+import Property from '../Property'
+
 class GlobalLayerEdit extends React.Component {
 
 	render (){
@@ -94,7 +96,15 @@ class GlobalLayerEdit extends React.Component {
 		return (
 			<h2 className="content-title content-title-sub content-title-light clearfix">
 				<span className="text-overflow-ellipsis content-title-label">
-				 	Your textbox here.
+				<Property
+								info={'layer filter regex'}
+								label={'layersearch'}
+								name={'layersearch'}
+								path={null}
+								required={true}
+								type={'string'}
+								value={'tempval'}
+				/>
 				</span>
 				<div className="content-title-options">
 					{focusFeatures.length > 0 && (
