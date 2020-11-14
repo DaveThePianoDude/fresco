@@ -17,7 +17,7 @@ import modelStyle from '../../model/style'
 class GlobalLayerEdit extends React.Component {
 
 	render (){
-		const {layer} = "TBD" 
+		const {layer} = this.props
 
 		if (!layer) return <div/>
 
@@ -26,7 +26,7 @@ class GlobalLayerEdit extends React.Component {
 			<div className="position-relative">
 				{this.renderSection()}
 			</div>
-			
+
 		</div>
 	}
 
@@ -44,40 +44,40 @@ class GlobalLayerEdit extends React.Component {
 
 		return (
 			<Switch>
-				<Route path={`${match.url}/actions`} 
+				<Route path={`${match.url}/actions`}
 					render={(props) => (
-						<LayerEditActions 
-							error={error} 
-							layer={layer} 
-							path={path} 
+						<LayerEditActions
+							error={error}
+							layer={layer}
+							path={path}
 							style={style}
 						/>
 					)}/>
-				<Route path={`${match.url}/json`} 
+				<Route path={`${match.url}/json`}
 					render={(props) => (
-						<LayerEditJson 
-							error={error} 
-							layer={layer} 
-							path={path} 
+						<LayerEditJson
+							error={error}
+							layer={layer}
+							path={path}
 							style={style}
 						/>
 					)}/>
 
-				<Route path={`${match.url}/editor`} 
+				<Route path={`${match.url}/editor`}
 					render={(props) => (
-						<LayerEditView 
-							error={error} 
-							layer={layer} 
-							path={path} 
+						<LayerEditView
+							error={error}
+							layer={layer}
+							path={path}
 							style={style}
 						/>
 					)}/>
-				<Route path={`${match.url}/features`} 
+				<Route path={`${match.url}/features`}
 					render={(props) => (
-						<LayerEditFeatures 
-							error={error} 
-							layer={layer} 
-							path={path} 
+						<LayerEditFeatures
+							error={error}
+							layer={layer}
+							path={path}
 							style={style}
 						/>
 					)}/>
@@ -94,7 +94,7 @@ class GlobalLayerEdit extends React.Component {
 		return (
 			<h2 className="content-title content-title-sub content-title-light clearfix">
 				<span className="text-overflow-ellipsis content-title-label">
-				 	Your textbox here.	
+				 	Your textbox here.
 				</span>
 				<div className="content-title-options">
 					{focusFeatures.length > 0 && (

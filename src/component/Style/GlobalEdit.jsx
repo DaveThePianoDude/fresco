@@ -211,10 +211,13 @@ class GlobalEdit extends React.Component {
 
 			const layersPath = [...path, 'current', 'layers']
 
-			console.log('match='+ match.url)
+			//console.log('match='+ match.url)
 
 			let redirect = `${match.url}/add`
 			const layers = style.getIn(['current','layers'])
+
+			console.log('layers=' + layers)
+
 			if (layers && layers.size > 0){
 				redirect = `${match.url}/${layers.getIn([0, 'id'])}`
 			}
@@ -227,6 +230,7 @@ class GlobalEdit extends React.Component {
 						<Route path={`${match.url}/:layerId`}
 							render={(props) => {
 								// get index for layerId
+								console.log('gettin index for layerId...')
 								const layerIndex = modelLayer.helpers.getIndexById({layerId: props.match.params.layerId, path:layersPath, style})
 								return (
 									<GlobalLayerEdit
