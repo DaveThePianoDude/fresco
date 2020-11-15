@@ -21,8 +21,20 @@ class GlobalEdit extends React.Component {
 		this.state = {
 			layerAddShown:false,
 			searchShow:false,
-			search:null
+			search:''
 		}
+	}
+
+	handleSearchChange = ({value})=>{
+		this.setState({
+			search: value,
+		})
+	}
+
+	handleSearchShowSet = ({show})=>{
+		this.setState({
+			searchShow: show,
+		})
 	}
 
 	handleChange = ()=>{

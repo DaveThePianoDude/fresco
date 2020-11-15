@@ -18,6 +18,19 @@ import Property from '../Property'
 
 class GlobalLayerEdit extends React.Component {
 
+	constructor(props) {
+		super(props)
+		this.state = {
+			regex:''
+		}
+	}
+
+	handleRegexChange = ({value})=>{
+		this.setState({
+			regex: value,
+		})
+	}
+
 	render (){
 		const {layer} = this.props
 
@@ -89,21 +102,27 @@ class GlobalLayerEdit extends React.Component {
 	}
 
 	renderTitle (){
-		const {focusFeatures, match, layer} = this.props
+		const {focusFeatures, match, layer} = this.props,
+			{regex} = this.state
 
 		const label = layer.getIn(['id'])
+
+		const handle = {
+			change: this.handleRegexChange
+		}
 
 		return (
 			<h2 className="content-title content-title-sub content-title-light clearfix">
 				<span className="text-overflow-ellipsis content-title-label">
 				<Property
+								handle={handle}
 								info={'layer filter regex'}
 								label={'layersearch'}
 								name={'layersearch'}
 								path={null}
 								required={true}
 								type={'string'}
-								value={'tempval'}
+								value={regex}
 				/>
 				</span>
 				<div className="content-title-options">
@@ -130,19 +149,6 @@ class GlobalLayerEdit extends React.Component {
 		)
 	}
 }
-
-/*
-	<span className="content-title-option interactive">
-						<Icon icon={'action-drop'}/>
-						<div className="content-title-option-hint">
-							<span>actions</span>
-						</div>
-					</span>
-					<div className="dropdown-menu" data-boundary="window">
-						<div onClick={this.handleClone} className="dropdown-item">clone layer</div>
-						<div onClick={()=>this.handleModalSet({modal:'delete'})} className="dropdown-item">delete layer</div>
-					</div>
-*/
 
 GlobalLayerEdit.propTypes = {
 	editMode: PropTypes.string,

@@ -36,10 +36,6 @@ class StyleSources extends React.Component {
 		const {sources, match} = this.props,
 			{search, searchShow} = this.state
 
-		//const errors = Mstyle.errorsGet()
-
-		//const sources = style.getIn(['current','sources']) || List([])
-
 		const handle = {
 			change: this.handleSearchChange
 		}
