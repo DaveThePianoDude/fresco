@@ -26,9 +26,15 @@ class GlobalLayerEdit extends React.Component {
 	}
 
 	handleRegexChange = ({value})=>{
+
+		const {handleSearchChange} = this.props
+
+		console.log('got here')
 		this.setState({
 			regex: value,
 		})
+		console.log('passing this:'+value)
+		handleSearchChange(value)
 	}
 
 	render (){
@@ -41,6 +47,7 @@ class GlobalLayerEdit extends React.Component {
 			<div className="position-relative">
 				{this.renderSection()}
 			</div>
+
 
 		</div>
 	}
@@ -102,14 +109,16 @@ class GlobalLayerEdit extends React.Component {
 	}
 
 	renderTitle (){
-		const {focusFeatures, match, layer} = this.props,
-			{regex} = this.state
+		const {focusFeatures, match, layer, handleSearchChange} = this.props,
+			{search} = this.state
 
 		const label = layer.getIn(['id'])
 
 		const handle = {
 			change: this.handleRegexChange
 		}
+
+		console.log("handleSearchChange="+handleSearchChange)
 
 		return (
 			<h2 className="content-title content-title-sub content-title-light clearfix">
@@ -122,7 +131,7 @@ class GlobalLayerEdit extends React.Component {
 								path={null}
 								required={true}
 								type={'string'}
-								value={regex}
+								value={search}
 				/>
 				</span>
 				<div className="content-title-options">
