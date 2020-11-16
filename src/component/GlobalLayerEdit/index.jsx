@@ -29,7 +29,7 @@ class GlobalLayerEdit extends React.Component {
 
 		const {handleSearchChange} = this.props
 
-		console.log('got here')
+		//('got here')
 		this.setState({
 			regex: value,
 		})
@@ -38,6 +38,10 @@ class GlobalLayerEdit extends React.Component {
 	}
 
 	render (){
+		const {searchSubset} = this.props
+
+		console.log("HERE IS YOUR SUBSET: " + searchSubset)
+
 		const {layer} = this.props
 
 		if (!layer) return <div/>
@@ -92,6 +96,7 @@ class GlobalLayerEdit extends React.Component {
 							layer={layer}
 							path={path}
 							style={style}
+							searchSubset={props.searchSubset}
 						/>
 					)}/>
 				<Route path={`${match.url}/features`}
@@ -120,9 +125,17 @@ class GlobalLayerEdit extends React.Component {
 
 		console.log("handleSearchChange="+handleSearchChange)
 
+		const {searchSubset} = this.props
+
+		const itemsArray = searchSubset.split(';');
+		const items = itemsArray.map(function(item){
+      return <li> {item} </li>;
+    });
+
 		return (
 			<h2 className="content-title content-title-sub content-title-light clearfix">
 				<span className="text-overflow-ellipsis content-title-label">
+				<h6>{items}</h6>
 				<Property
 								handle={handle}
 								info={'layer filter regex'}

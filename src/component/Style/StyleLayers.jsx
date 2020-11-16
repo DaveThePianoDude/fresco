@@ -37,8 +37,8 @@ class StyleLayers extends React.Component {
 
 		try{
       await modelLayer.actions.reorder({
-				indexOld: sourceIndex, 
-				indexNew: destinationIndex, 
+				indexOld: sourceIndex,
+				indexNew: destinationIndex,
 				path: [...path, 'current', 'layers']
 			})
     } catch(e){
@@ -47,6 +47,7 @@ class StyleLayers extends React.Component {
 	}
 
 	handleSearchChange = ({value})=>{
+		console.log('you searched')
 		this.setState({
 			search: value,
 		})
@@ -82,7 +83,7 @@ class StyleLayers extends React.Component {
 		return (
 			<div className="content-body content-body-flex">
 				<div className="content-body-left">
-					{searchShow ? 
+					{searchShow ?
 						<div className="d-flex p-1">
 							<div className="property flex-fill">
 								<Field
@@ -121,7 +122,7 @@ class StyleLayers extends React.Component {
 						<div className="content-body-title bg-info pl-1">
 							<Icon className="mr-1" icon={'map-focus'} weight={'solid'}/>
 							{Object.keys(focusLayers).length} Layers Focused
-							<button type="button" className="btn btn-outline-light btn-xs float-right" 
+							<button type="button" className="btn btn-outline-light btn-xs float-right"
 								onClick={this.handleFocusClose}>
 								<Icon icon={'close'}/>
 							</button>
@@ -149,7 +150,7 @@ class StyleLayers extends React.Component {
 						{(provided, snapshot) => (
 							<div ref={provided.innerRef}>
 								{layers !== undefined && layers.map((layer,i)=>{
-									
+
 									if (!layer || !layer.has) return <div key={i}/>
 									const layerId = layer.has('id')? layer.get('id'): `layer-${i}`
 
@@ -233,18 +234,18 @@ class StyleLayers extends React.Component {
 		return (
 			<div className="content-body-right">
 				<Switch>
-					<Route path={`${match.url}/add`} 
+					<Route path={`${match.url}/add`}
 						render={(props) => <LayerAdd path={layersPath} style={style} {...props}/>}/>
-					<Route path={`${match.url}/:layerId`} 
+					<Route path={`${match.url}/:layerId`}
 						render={(props) => {
 							// get index for layerId
 							const layerIndex = modelLayer.helpers.getIndexById({layerId: props.match.params.layerId, path:layersPath, style})
 							return (
-								<LayerEdit 
-									error={error && error.has && error.getIn([layerIndex])} 
-									layerId={props.match.params.layerId} 
+								<LayerEdit
+									error={error && error.has && error.getIn([layerIndex])}
+									layerId={props.match.params.layerId}
 									layerIndex={layerIndex}
-									path={[...layersPath, layerIndex]} 
+									path={[...layersPath, layerIndex]}
 									style={style} {...props}
 								/>
 							)

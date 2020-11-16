@@ -44,7 +44,7 @@ class LayerEditGroup extends React.Component {
 				</span>
 				<span className="">
 					{group}
-					
+
 				</span>
 
 			</div>
@@ -58,7 +58,7 @@ class LayerEditGroup extends React.Component {
 		switch (group){
 			case 'root':
 				return <LayerEditGroupRoot
-					error={error} 
+					error={error}
 					group={group}
 					layer={layer}
 					path={path}
@@ -66,7 +66,7 @@ class LayerEditGroup extends React.Component {
 				/>
 			default:
 				return <LayerEditGroupProps
-					error={error && error.has && error.getIn([group])} 
+					error={error && error.has && error.getIn([group])}
 					group={group}
 					layer={layer}
 					path={path}

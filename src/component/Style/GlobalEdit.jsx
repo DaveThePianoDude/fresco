@@ -21,14 +21,16 @@ class GlobalEdit extends React.Component {
 		this.state = {
 			layerAddShown:false,
 			searchShow:false,
-			search:''
+			search:'',
+			searchSubset:';'
 		}
 	}
 
 	handleSearchChange = ({value})=>{
-		console.log('handing search chg. value='+value)
+		console.log('handling search chg. value='+value)
 		this.setState({
 			search: value,
+			searchSubset: ''
 		})
 	}
 
@@ -150,6 +152,8 @@ class GlobalEdit extends React.Component {
 								<div ref={provided.innerRef}>
 									{layers !== undefined && layers.map((layer,i)=>{
 
+										//console.log("Is this your subset? " + layers)
+
 										if (!layer || !layer.has) return <div key={i}/>
 										const layerId = layer.has('id')? layer.get('id'): `layer-${i}`
 
@@ -161,6 +165,8 @@ class GlobalEdit extends React.Component {
 
 										const color = modelLayer.helpers.getColor({layer}) || '#FFFFFF'
 										const icon = `layer-${modelLayer.helpers.getType({layer})}`
+
+										this.state.searchSubset += layerId + ';'
 
 										return <Draggable key={layerId} draggableId={layerId} index={i}>
 											{(provided, snapshot) => (
@@ -230,7 +236,7 @@ class GlobalEdit extends React.Component {
 			let redirect = `${match.url}/add`
 			const layers = style.getIn(['current','layers'])
 
-			//console.log('layers=' + layers)
+			console.log('layers=' + layers)
 
 			if (layers && layers.size > 0){
 				redirect = `${match.url}/${layers.getIn([0, 'id'])}`
@@ -254,6 +260,7 @@ class GlobalEdit extends React.Component {
 										path={[...layersPath, layerIndex]}
 										style={style} {...props}
 										handleSearchChange={this.handleSearchChange}
+										searchSubset={this.state.searchSubset}
 									/>
 								)
 							}}/>

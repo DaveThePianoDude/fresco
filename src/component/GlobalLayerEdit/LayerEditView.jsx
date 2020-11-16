@@ -13,34 +13,34 @@ class LayerEditView extends React.Component {
 			value: 'editor',
 		})
 	}
-	
+
 	render (){
 		const {error, layer, path, style} = this.props
 
 		return (
 			<div className="content-body">
-				<LayerEditGroup 
-					error={error}  
+				<LayerEditGroup
+					error={error}
 					group="root"
 					layer={layer}
-					open={false} 
-					path={path} 
+					open={false}
+					path={path}
 					style={style}
 				/>
-				<LayerEditGroup 
-					error={error}  
+				<LayerEditGroup
+					error={error}
 					group="layout"
 					layer={layer}
-					open={true} 
-					path={path} 
+					open={true}
+					path={path}
 					style={style}
 				/>
-				<LayerEditGroup 
+				<LayerEditGroup
 					error={error}
 					group="paint"
-					layer={layer}  
-					open={true} 
-					path={path} 
+					layer={layer}
+					open={true}
+					path={path}
 					style={style}
 				/>
 			</div>
