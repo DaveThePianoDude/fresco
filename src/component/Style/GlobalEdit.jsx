@@ -29,8 +29,7 @@ class GlobalEdit extends React.Component {
 	handleSearchChange = ({value})=>{
 		console.log('handling search chg. value='+value)
 		this.setState({
-			search: value,
-			searchSubset: ''
+			search: value
 		})
 	}
 
@@ -233,12 +232,10 @@ class GlobalEdit extends React.Component {
 
 			const layersPath = [...path, 'current', 'layers']
 
-			//console.log('match='+ match.url)
-
 			let redirect = `${match.url}/add`
 			const layers = style.getIn(['current','layers'])
 
-			console.log('layers=' + layers)
+			//console.log('layers=' + layers)
 
 			if (layers && layers.size > 0){
 				redirect = `${match.url}/${layers.getIn([0, 'id'])}`
