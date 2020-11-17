@@ -144,6 +144,8 @@ class GlobalEdit extends React.Component {
 				return <div/>
 			}
 
+			this.state.searchSubset = '';
+
 			return (
 				<div className="">
 					<DragDropContext onDragEnd={this.handleOnDragEnd}>
