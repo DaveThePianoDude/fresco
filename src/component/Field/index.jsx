@@ -13,7 +13,7 @@ import FieldString from './FieldString'
 class Field extends React.Component {
 
 	render (){
-		const {type} = this.props
+		const {type, value} = this.props
 
 		switch (type){
 			case 'ac':
@@ -31,6 +31,7 @@ class Field extends React.Component {
 			case 'string':
 				return <FieldString {...this.props}/>
 			case 'json':
+				console.log('FIELD TYPE='+type)
 				return <FieldJSON {...this.props}/>
 			default:
 				return <FieldString {...this.props}/>

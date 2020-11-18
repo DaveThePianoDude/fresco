@@ -12,10 +12,19 @@ class LayerEditView extends React.Component {
 			path: ['editMode'],
 			value: 'editor',
 		})
+		console.log("This layereditview component mounted.")
+	}
+
+	handleChange = ({value})=>{
+		console.log('handling CHANGE ... value='+value)
 	}
 
 	render (){
 		const {error, layer, path, style} = this.props
+
+		const handle = {
+			change: this.handleChange
+		}
 
 		return (
 			<div className="content-body">
@@ -36,6 +45,7 @@ class LayerEditView extends React.Component {
 					style={style}
 				/>
 				<LayerEditGroup
+					handle={handle}
 					error={error}
 					group="paint"
 					layer={layer}

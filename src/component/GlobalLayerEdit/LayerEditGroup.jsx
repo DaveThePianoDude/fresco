@@ -15,6 +15,7 @@ class LayerEditGroup extends React.Component {
 		this.state = {
 			open
 		}
+		console.log('consturcted a layer edit group :)')
 	}
 
 	handleOpenSet = ({open})=>{
@@ -54,6 +55,8 @@ class LayerEditGroup extends React.Component {
 
 	renderContent (){
 		const {error, group, layer, path, style} = this.props
+
+		console.log('THIS IS LAYER:' + layer)
 
 		switch (group){
 			case 'root':

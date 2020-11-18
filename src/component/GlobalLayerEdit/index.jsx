@@ -11,6 +11,7 @@ import LayerEditJson from './LayerEditJson'
 import LayerEditView from './LayerEditView'
 import Infotip from '../Infotip'
 import modelMap from '../../model/map'
+import modelLayer from '../../model/layer'
 import modelPreference from '../../model/preference'
 import modelStyle from '../../model/style'
 
@@ -33,7 +34,7 @@ class GlobalLayerEdit extends React.Component {
 		this.setState({
 			regex: value,
 		})
-		console.log('passing this:'+value)
+		//console.log('passing this:'+value)
 		handleSearchChange(value)
 	}
 
@@ -58,6 +59,26 @@ class GlobalLayerEdit extends React.Component {
 
 	renderSection (){
 		const {editMode, focusFeatures, error, match, layer, path, style} = this.props
+
+		console.log("HERE IS YOUR NEW STYLE"+style)
+
+		//const {style} = this.props
+		// get layer path
+		const id = layer.getIn(['id'])
+		console.log("LAYER ID=" + id)
+
+		const layerPath = modelLayer.helpers.getLayerPath({id, style})
+		console.log("LAYER PATH=" + layerPath)
+
+		const lineWidthPath = [...layerPath, 'paint', 'line-width']
+
+		// THESE NEXT LINES CRASH THE APP -- DO NOT USE AS-IS!
+		//modelStyle.actions.setIn({
+		//	path: lineWidthPath,
+		//	value: '{"stops": [[11,5],[15,77]]}'
+		//})
+
+		console.log("HERE IS MODIFIED STYLE"+style)
 
 		let redirect
 		if (focusFeatures.length > 0){
@@ -123,7 +144,7 @@ class GlobalLayerEdit extends React.Component {
 			change: this.handleRegexChange
 		}
 
-		console.log("handleSearchChange="+handleSearchChange)
+		//console.log("handleSearchChange="+handleSearchChange)
 
 		const {searchSubset} = this.props
 

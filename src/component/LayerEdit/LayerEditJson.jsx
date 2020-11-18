@@ -27,6 +27,8 @@ class LayerEditJson extends React.Component {
 			history.replace(pathNew)
 		}
 
+		console.log("New json from handleChange:" + value)
+
 		await modelStyle.actions.setIn({
 			path,
 			value: fromJS(value),
@@ -47,7 +49,7 @@ class LayerEditJson extends React.Component {
 				<h4 className="content-body-title mb-0">
 					Layer Json
 				</h4>
-				<Field 
+				<Field
 					error={error}
 					handle={handle}
 					type={type}

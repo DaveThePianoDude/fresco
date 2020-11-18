@@ -42,7 +42,12 @@ class FieldJSON extends React.Component {
 		const {handle} = this.props
 		const val = this.cm.getValue()
 		const json = this.strToJson(val)
-		if (json) return handle.change({value:json})
+
+		if (json)
+		{
+			console.log('here is changed, valid json:'+val);
+			return handle.change({value:json})
+		}
 		this.cm.performLint()
 	}
 	handleFocus = ()=>{
@@ -71,7 +76,7 @@ class FieldJSON extends React.Component {
 			return console.log(err)
 		}
 	}
-	
+
 	errorsShow(props = this.props){
 		const {error} = props
 
@@ -79,7 +84,7 @@ class FieldJSON extends React.Component {
 
 		if (!error){
 			return
-		} 
+		}
 		if (typeof error === 'string'){
 			return
 		}
@@ -116,16 +121,16 @@ class FieldJSON extends React.Component {
 				marker.innerHTML = '<i class="text-danger code-error-left position-relative fas fa-exclamation-triangle" data-toggle="tooltip"></i>'
 				this.cm.setGutterMarker(line,'err-markers',marker)
 				//const tooltipI = window.$(marker)
-				
+
 				//this.tooltipI.push(tooltipI)
 				//tooltipI.tooltip()
 			}
 		})
 	}
 
-	
 
-	
+
+
 
 	shouldComponentUpdate(nextProps, nextState){
 		return false

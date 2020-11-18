@@ -11,6 +11,7 @@ import modelPreference from '../../model/preference'
 class LayerEditJson extends React.Component {
 
 	componentDidMount (){
+		console.log ('This component mounted.')
 		// set user preference to json
 		modelPreference.actions.setIn({
 			path: ['editMode'],
@@ -22,10 +23,14 @@ class LayerEditJson extends React.Component {
 		const {history, path, layer} = this.props,
 			{pathname} = this.props.location
 
+			console.log('VAULE 2='+{value})
+
 		if (layer.get('id') !== value.id){
 			const pathNew = pathname.replace(/\/layers\/[^/]*/, `/layers/${value.id}`)
 			history.replace(pathNew)
 		}
+
+		console.log("New json from handleChange:")
 
 		await modelStyle.actions.setIn({
 			path,
@@ -47,7 +52,7 @@ class LayerEditJson extends React.Component {
 				<h4 className="content-body-title mb-0">
 					Layer Json
 				</h4>
-				<Field 
+				<Field
 					error={error}
 					handle={handle}
 					type={type}

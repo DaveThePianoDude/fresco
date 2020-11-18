@@ -46,7 +46,7 @@ class Style extends React.Component {
 				</div>
 
 				{error && typeof error.get('current') === 'string' && <Alert handleClose={this.handleAlertClose} message={error.get('current')}/>}
-				
+
 			</React.Fragment>
 		)
 	}
@@ -60,55 +60,55 @@ class Style extends React.Component {
 		if (!style.hasIn(['current','sources']) || style.getIn(['current','sources']).size < 1) redirect = `${match.url}/sources`
 		return (
 			<Switch>
-				<Route path={`${match.url}/json`} 
+				<Route path={`${match.url}/json`}
 					render={(props) => (
-						<StyleCode 
-							error={error} 
-							handle={this.handle} 
-							path={path} 
-							style={style} 
+						<StyleCode
+							error={error}
+							handle={this.handle}
+							path={path}
+							style={style}
 							{...props}
 						/>
 					)}/>
-				<Route path={`${match.url}/layers`} 
+				<Route path={`${match.url}/layers`}
 					render={(props) => (
-						<StyleLayers 
-							error={error && error.has && error.getIn(['current','layers'])} 
-							handle={this.handle} 
-							match={match} 
-							path={path} 
-							style={style} 
+						<StyleLayers
+							error={error && error.has && error.getIn(['current','layers'])}
+							handle={this.handle}
+							match={match}
+							path={path}
+							style={style}
 							{...props}
 						/>
 					)}/>
-				<Route path={`${match.url}/sources`} 
+				<Route path={`${match.url}/sources`}
 					render={(props) => (
-						<StyleSources 
-							error={error && error.has && error.getIn(['current','sources'])} 
-							handle={this.handle} 
-							match={match} 
-							path={path} 
-							style={style} 
+						<StyleSources
+							error={error && error.has && error.getIn(['current','sources'])}
+							handle={this.handle}
+							match={match}
+							path={path}
+							style={style}
 							{...props}
 						/>
 					)}/>
-				<Route path={`${match.url}/settings`} 
+				<Route path={`${match.url}/settings`}
 					render={(props) => (
 						<StyleSettings
-							error={error && error.has && error.getIn(['current','settings'])} 
-							handle={this.handle} 
-							path={path} 
-							style={style} 
+							error={error && error.has && error.getIn(['current','settings'])}
+							handle={this.handle}
+							path={path}
+							style={style}
 							{...props}
 						/>
 					)}/>
-				<Route path={`${match.url}/globaledit`} 
+				<Route path={`${match.url}/globaledit`}
 					render={(props) => (
 						<GlobalEdit
-							error={error && error.has && error.getIn(['current','globaledit'])} 
-							handle={this.handle} 
-							path={path} 
-							style={style} 
+							error={error && error.has && error.getIn(['current','globaledit'])}
+							handle={this.handle}
+							path={path}
+							style={style}
 							{...props}
 						/>
 					)}/>
@@ -123,9 +123,9 @@ class Style extends React.Component {
 		return (
 			<div className="content-title-options">
 				<NavLink className={`content-title-option interactive infotip-trigger ${error && error.hasIn(['current','globaledit'])? 'error': ''}`} to={`${match.url}/globaledit`}>
-                                        <Icon icon={'global'}/>
-                                        <Infotip direction={'y'} message={'global edit'}/>
-                                </NavLink>
+          <Icon icon={'global'}/>
+          <Infotip direction={'y'} message={'global edit'}/>
+        </NavLink>
 				<NavLink className={`content-title-option interactive infotip-trigger ${error && error.hasIn(['current','settings'])? 'error': ''}`} to={`${match.url}/settings`}>
 					<Icon icon={'settings'}/>
 					<Infotip direction={'y'} message={'style settings'}/>

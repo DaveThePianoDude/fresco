@@ -27,7 +27,7 @@ class GlobalEdit extends React.Component {
 	}
 
 	handleSearchChange = ({value})=>{
-		console.log('handling search chg. value='+value)
+		//console.log('handling search chg. value='+value)
 		this.setState({
 			search: value
 		})
@@ -45,13 +45,6 @@ class GlobalEdit extends React.Component {
 	handleOnDragEnd = ()=>{
 
 	}
-
-	//handleSearchChange = ({value})=>{
-	//	console.log('handing search chg.')
-	//	this.setState({
-	//		search: value,
-	//	})
-	//}
 
 	handleSearchShowSet = ({show})=>{
 		this.setState({
@@ -227,7 +220,7 @@ class GlobalEdit extends React.Component {
 		}
 
 		renderRight (){
-			console.log('rendering right...')
+			//console.log('rendering right...')
 			const {error, match, path, style} = this.props
 
 			const layersPath = [...path, 'current', 'layers']
